@@ -10,11 +10,29 @@ module.exports = (app) => {
   });
 
   const { router, controller } = app;
-  router.get("/parameter", controller.home.parameter);
+  // home
+  // 获得首页参数
+  router.get("/parameter", app.jwt, controller.home.parameter);
 
   // userAccess
+  // 登陆
   router.post("/api/user/access/login", controller.userAccess.login);
 
-  router.get("/*", controller.home.index);
+  // file
+  // 文件名不能包含下列任何字符 \ / : * ? " < > |
+  // 读取指定目录下文件、文件夹(并且排序)
+  router.post("/file/read-directory", app.jwt, controller.file.readDirectory);
+  // // 创建文件夹
+  // router.post("file/read-directory", controller.userAccess.login);
+  // // 重命名文件夹、文件
+  // router.post("file/rename", controller.userAccess.login);
+  // // 删除文件夹、文件
+  // router.post("file/delete", controller.userAccess.login);
+  // // 下载文件夹、文件
+  // router.post("file/download", controller.userAccess.login);
+  // // 复制文件夹、文件
+  // router.post("file/copy", controller.userAccess.login);
 
+  // home重定向
+  router.get("/*", controller.home.index);
 };

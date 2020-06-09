@@ -38,7 +38,7 @@ class HomeController extends Controller {
                 {
                   text: "项目立项",
                   icon: "anticon-file-add",
-                  link: "/projects/initial",
+                  link: "/projects/new",
                 },
                 {
                   text: "项目总览",

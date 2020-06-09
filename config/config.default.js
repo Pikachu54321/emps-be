@@ -45,6 +45,7 @@ module.exports = (appInfo) => {
       },
       // domainWhiteList: [ 'http://localhost:4200' ],
     },
+    // 跨域
     cors: {
       origin: 'http://localhost:4200',
       allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',

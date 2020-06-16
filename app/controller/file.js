@@ -1,17 +1,21 @@
-'use strict';
+"use strict";
 
-const Controller = require('egg').Controller;
+const Controller = require("egg").Controller;
 
 class FileController extends Controller {
-
   constructor(ctx) {
-    super(ctx)
+    super(ctx);
 
     this.ReadDirectoryTransfer = {
-      path: { type: 'string', required: true, allowEmpty: false },
-      sortName: { type: 'string', required: true, allowEmpty: false },
-      sortOrder: { type: 'string', required: true, allowEmpty: false },
-    }
+      path: { type: "string", required: true, allowEmpty: true },
+      sortName: { type: "string", required: true, allowEmpty: true },
+      sortOrder: { type: "string", required: true, allowEmpty: true },
+    };
+
+    this.NewFolderTransfer = {
+      parentFolderPath: { type: "string", required: true, allowEmpty: true },
+      newFoldername: { type: "string", required: true, allowEmpty: false },      
+    };
   }
 
   // 读取指定目录下文件、文件夹(并且排序)
@@ -22,11 +26,24 @@ class FileController extends Controller {
     // 组装参数
     const payload = ctx.request.body || {};
     // 调用 Service 进行业务处理
-    await service.file.readDirectory(payload);
+    const res = await service.file.readDirectory(payload);
     // 设置响应内容和响应状态码
-    const res={fileList:[{name:"a1",path:"aaa",isDir:true},{name:"b1",path:"aaa",isDir:true}]};
-    ctx.helper.success({ctx, res});
+    // const res = {fileList:[{name:"a1",path:"aaa",isDir:true},{name:"b1",path:"aaa",isDir:true}]};
+    ctx.helper.success({ ctx, res });
   }
+
+  // 新建文件夹
+  async newFolder() {
+    const { ctx, service } = this;
+    // 校验参数
+    ctx.validate(this.NewFolderTransfer);
+    // 组装参数
+    const payload = ctx.request.body || {};
+    // 调用 Service 进行业务处理
+    const res = await service.file.newFolder(payload);
+    // 设置响应内容和响应状态码
+    ctx.helper.success({ ctx, res });
+  }  
 }
 
 module.exports = FileController;

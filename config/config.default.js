@@ -16,7 +16,8 @@ module.exports = (appInfo) => {
   config.keys = appInfo.name + "_1590971868955_2385";
 
   // add your middleware config here
-  config.middleware = [];
+  // ["errorHandler", "eggLog"];
+  config.middleware = ["errorHandler", "eggLog"];
   // config.security = {
   //   csrf: {
   //     enable: false,
@@ -29,7 +30,13 @@ module.exports = (appInfo) => {
   // };
   // add your user config here
   const userConfig = {
-    myAppName: 'egg',
+    myAppName: "egg",
+
+    // 文件系统根目录 // file://zhn-pc/share
+    // file://E://
+    // file://192.168.245.250/share
+    FileRootDir: "file://E://",
+
     view: {
       mapping: {
         ".ejs": "ejs",
@@ -47,30 +54,43 @@ module.exports = (appInfo) => {
     },
     // 跨域
     cors: {
-      origin: 'http://localhost:4200',
-      allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+      origin: "http://localhost:4200",
+      allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS",
       credentials: true,
     },
     bodyParser: {
-      jsonLimit: '1mb',
-      formLimit: '1mb',
-    }, 
+      jsonLimit: "1mb",
+      formLimit: "1mb",
+    },
     jwt: {
-      secret: 'SunWuKong',
+      secret: "SunWuKong",
       // enable: true, // default is false
       // match: '/jwt', // optional
     },
     sequelize: {
-      dialect: 'mysql',
-      database: 'epms',     
-      host: 'localhost',
+      dialect: "mysql",
+      database: "epms",
+      host: "localhost",
       port: 3306,
-      username: 'root',
-      password: '1234', 
-    },  
+      username: "root",
+      password: "1234",
+    },
     bcrypt: {
-      saltRounds: 10 // default 10
-    }           
+      saltRounds: 10, // default 10
+    },
+    // 上传
+    multipart: {
+      // 增加文件扩展名的支持
+      fileExtensions: [ 
+        "txt", "rtf", // 匹配 txt
+        "xls", "xlsx", // 匹配 excel
+        "doc", "docx", // 匹配 word
+        "pdf", // 匹配 pdf
+        "ppt","pptx", // 匹配 ppt
+        "vsd", // 匹配 vsd
+        "dws", "dwt", "dxf", "dwg", "cad"// 匹配 CAD
+      ] 
+    },
   };
 
   return {

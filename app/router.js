@@ -12,18 +12,25 @@ module.exports = (app) => {
   const { router, controller } = app;
   // home
   // 获得首页参数
-  router.get("/parameter", app.jwt, controller.home.parameter);
+  router.get("/api/parameter", app.jwt, controller.home.parameter);
 
   // userAccess
   // 登陆
   router.post("/api/user/access/login", controller.userAccess.login);
 
+  // project
+  // 读取项目立项页路径配置参数
+  router.get("/api/projects/project-new-path-parameters", app.jwt, controller.project.projectNewPathParameters);
+
   // file
   // 文件名不能包含下列任何字符 \ / : * ? " < > |
   // 读取指定目录下文件、文件夹(并且排序)
-  router.post("/file/read-directory", app.jwt, controller.file.readDirectory);
-  // // 创建文件夹
-  // router.post("file/read-directory", controller.userAccess.login);
+  router.post("/api/file/read-directory", app.jwt, controller.file.readDirectory);
+  // 创建文件夹
+  router.post("/api/file/new-folder", app.jwt, controller.file.newFolder);
+  // 上传文件
+  router.post("/api/uploads", app.jwt, controller.upload.multiple);
+
   // // 重命名文件夹、文件
   // router.post("file/rename", controller.userAccess.login);
   // // 删除文件夹、文件

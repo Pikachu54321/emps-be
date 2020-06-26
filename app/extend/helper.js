@@ -1,7 +1,10 @@
-const moment = require('moment')
+const moment = require('moment');
+var pinyin = require("pinyin");
 
 // 格式化时间的扩展
-exports.formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss')
+exports.formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss');
+// 格式化时间的扩展
+exports.formatDate = time => moment(time).format('YYYY-MM-DD');
 
 // 格式化成功response的扩展
 exports.success = ({ ctx, res = null, msg = 'ok',code })=> {
@@ -10,7 +13,7 @@ exports.success = ({ ctx, res = null, msg = 'ok',code })=> {
     data: res,
     code, 
   }
-  ctx.status = 200
+  ctx.status = 200;
 }
 
 // 文件排序
@@ -19,13 +22,16 @@ exports.fileSort = (fileList,sortName,sortOrder) => {
     fileList.sort(function (a, b) {
       let value1 = a.isDir ? a[sortName].padStart(a[sortName].length + 1, "0").toLowerCase() : a[sortName].padStart(a[sortName].length + 1, "1").toLowerCase();
       let value2 = b.isDir ? b[sortName].padStart(b[sortName].length + 1, "0").toLowerCase() : b[sortName].padStart(b[sortName].length + 1, "1").toLowerCase();
-      if (value1 < value2) {
-        return -1;
-      } else if (value1 > value2) {
-        return 1;
-      } else {
-        return 0;
-      }
+      // 字母排序没问题，汉字排序有问题
+      // if (value1 < value2) {
+      //   return -1;
+      // } else if (value1 > value2) {
+      //   return 1;
+      // } else {
+      //   return 0;
+      // }
+ 
+      return pinyin.compare(value1, value2);
     });
   } else if (sortName === "time") {
     fileList.sort(function (a, b) {

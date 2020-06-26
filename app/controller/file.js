@@ -14,7 +14,7 @@ class FileController extends Controller {
 
     this.NewFolderTransfer = {
       parentFolderPath: { type: "string", required: true, allowEmpty: true },
-      newFoldername: { type: "string", required: true, allowEmpty: false },      
+      newFoldername: { type: "string", required: true, allowEmpty: false },
     };
   }
 
@@ -28,7 +28,6 @@ class FileController extends Controller {
     // 调用 Service 进行业务处理
     const res = await service.file.readDirectory(payload);
     // 设置响应内容和响应状态码
-    // const res = {fileList:[{name:"a1",path:"aaa",isDir:true},{name:"b1",path:"aaa",isDir:true}]};
     ctx.helper.success({ ctx, res });
   }
 
@@ -39,11 +38,17 @@ class FileController extends Controller {
     ctx.validate(this.NewFolderTransfer);
     // 组装参数
     const payload = ctx.request.body || {};
+    payload.baseDir=ctx.app.config.FileRootDir;
     // 调用 Service 进行业务处理
     const res = await service.file.newFolder(payload);
     // 设置响应内容和响应状态码
     ctx.helper.success({ ctx, res });
-  }  
+    if(res.msg==="ok"){
+      ctx.helper.success({ctx, res});
+    }else{
+      ctx.helper.success({ctx, undefined, msg:res.msg, code:res.code});
+    }
+  }
 }
 
 module.exports = FileController;

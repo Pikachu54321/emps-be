@@ -36,6 +36,8 @@ module.exports = (appInfo) => {
     // file://E://
     // file://192.168.245.250/share
     FileRootDir: "file://E://",
+    // 项目临时上传文件目录
+    FileTempDir: "/app/public/uploads/",
 
     view: {
       mapping: {
@@ -78,18 +80,26 @@ module.exports = (appInfo) => {
     bcrypt: {
       saltRounds: 10, // default 10
     },
-    // 上传
+    // 配置上传
     multipart: {
       // 增加文件扩展名的支持
-      fileExtensions: [ 
-        "txt", "rtf", // 匹配 txt
-        "xls", "xlsx", // 匹配 excel
-        "doc", "docx", // 匹配 word
+      fileExtensions: [
+        "txt",
+        "rtf", // 匹配 txt
+        "xls",
+        "xlsx", // 匹配 excel
+        "doc",
+        "docx", // 匹配 word
         "pdf", // 匹配 pdf
-        "ppt","pptx", // 匹配 ppt
+        "ppt",
+        "pptx", // 匹配 ppt
         "vsd", // 匹配 vsd
-        "dws", "dwt", "dxf", "dwg", "cad"// 匹配 CAD
-      ] 
+        "dws",
+        "dwt",
+        "dxf",
+        "dwg",
+        "cad", // 匹配 CAD
+      ],
     },
   };
 

@@ -7,6 +7,7 @@
     "declarations": true
   },
   "dependencies": {
+    "await-stream-ready": "^1.0.1",
     "egg": "^2.15.1",
     "egg-bcrypt": "^1.1.0",
     "egg-cors": "^2.2.3",
@@ -16,7 +17,8 @@
     "egg-validate": "^2.0.2",
     "egg-view": "^2.1.2",
     "egg-view-ejs": "^2.0.1",
-    "mysql2": "^2.1.0"
+    "mysql2": "^2.1.0",
+    "pinyin": "^2.9.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",

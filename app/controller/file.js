@@ -12,6 +12,10 @@ class FileController extends Controller {
       sortOrder: { type: "string", required: true, allowEmpty: true },
     };
 
+    this.CheckDirectoryTransfer = {
+      path: { type: "string", required: true, allowEmpty: true },
+    };
+
     this.NewFolderTransfer = {
       parentFolderPath: { type: "string", required: true, allowEmpty: true },
       newFoldername: { type: "string", required: true, allowEmpty: false },
@@ -31,6 +35,19 @@ class FileController extends Controller {
     ctx.helper.success({ ctx, res });
   }
 
+  // 检查指定文件夹是否可写
+  async checkDirectory() {
+    const { ctx, service } = this;
+    // 校验参数
+    ctx.validate(this.CheckDirectoryTransfer);
+    // 组装参数
+    const payload = ctx.request.body || {};
+    // 调用 Service 进行业务处理
+    const res = await service.file.checkDirectory(payload);
+    // 设置响应内容和响应状态码
+    ctx.helper.success({ ctx, res });
+  }
+
   // 新建文件夹
   async newFolder() {
     const { ctx, service } = this;
@@ -38,15 +55,15 @@ class FileController extends Controller {
     ctx.validate(this.NewFolderTransfer);
     // 组装参数
     const payload = ctx.request.body || {};
-    payload.baseDir=ctx.app.config.FileRootDir;
+    payload.baseDir = ctx.app.config.FileRootDir;
     // 调用 Service 进行业务处理
     const res = await service.file.newFolder(payload);
     // 设置响应内容和响应状态码
     ctx.helper.success({ ctx, res });
-    if(res.msg==="ok"){
-      ctx.helper.success({ctx, res});
-    }else{
-      ctx.helper.success({ctx, undefined, msg:res.msg, code:res.code});
+    if (res.msg === "ok") {
+      ctx.helper.success({ ctx, res });
+    } else {
+      ctx.helper.success({ ctx, undefined, msg: res.msg, code: res.code });
     }
   }
 }

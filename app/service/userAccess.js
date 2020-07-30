@@ -13,7 +13,7 @@ class UserAccessService extends Service {
     }
     if (!user) {
       // ctx.throw(404, "user not found");
-      return {code: "404", msg: "用户没有找到"};
+      return { code: "404", msg: "用户没有找到" };
     }
     // 生成密码哈希
     // console.log(await ctx.genHash('Zy680030@'));
@@ -22,7 +22,7 @@ class UserAccessService extends Service {
     let verifyPsw = await ctx.compare(payload.password, user.password);
     if (!verifyPsw) {
       // ctx.throw(404, 'user password is error');
-      return {code: "404", msg: "用户密码错误"};
+      return { code: "404", msg: "用户密码错误" };
     }
     // 生成Token令牌
     let data = {
@@ -32,7 +32,7 @@ class UserAccessService extends Service {
       mobile: user.mobile,
       email: user.email,
       avatar: user.avatar,
-      msg:"ok",
+      msg: "ok",
     };
     // return { token: await service.actionToken.apply(user._id) }
     return data;

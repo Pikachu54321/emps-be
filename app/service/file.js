@@ -63,21 +63,38 @@ class FileService extends Service {
     return data;
   }
 
+  // 检查指定文件夹是否可写
+  async checkDirectory(payload) {
+    const { ctx, service } = this;
+    try {
+      // 检查文件夹是否可写。
+      fs.accessSync(new URL(ctx.app.config.FileRootDir + payload.path), fs.constants.W_OK);
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+    let data = {
+      path: payload.path,
+      msg: "ok",
+    };
+    return data;
+  }
+
   // 创建文件夹
   async newFolder(payload) {
     const { ctx, service } = this;
-    let isExist=false;
+    let isExist = false;
     try {
       // 检查文件夹是否存在。
       if (fs.existsSync(new URL(payload.baseDir + payload.parentFolderPath + "/" + payload.newFoldername))) {
-        isExist=true;
+        isExist = true;
       } else {
         // 检查父文件夹是否可写。
         fs.accessSync(new URL(payload.baseDir + payload.parentFolderPath), fs.constants.W_OK);
         // 创建文件夹
         // 权限参数 mode 主要针对 Linux 和 Unix 操作系统，Window 的权限默认是可读、可写、不可执行，所以权限位数字表示为 0o666，转换十进制表示为 438。
         fs.mkdirSync(new URL(payload.baseDir + payload.parentFolderPath + "/" + payload.newFoldername), 438);
-        isExist=false;
+        isExist = false;
       }
     } catch (err) {
       throw err;
@@ -86,10 +103,10 @@ class FileService extends Service {
       path: payload.parentFolderPath,
     };
     // 如果文件夹已存在
-    if(isExist){
-      data.msg="文件夹已存在";
-    }else{
-      data.msg="ok";
+    if (isExist) {
+      data.msg = "文件夹已存在";
+    } else {
+      data.msg = "ok";
     }
     return data;
   }

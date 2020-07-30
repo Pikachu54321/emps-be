@@ -5,6 +5,8 @@ var pinyin = require("pinyin");
 exports.formatTime = time => moment(time).format('YYYY-MM-DD HH:mm:ss');
 // 格式化时间的扩展
 exports.formatDate = time => moment(time).format('YYYY-MM-DD');
+// 格式化时间的扩展
+exports.formatUploadFileDate = time => moment(time).format('YYYYMMDD_HHmmss');
 
 // 格式化成功response的扩展
 exports.success = ({ ctx, res = null, msg = 'ok',code })=> {

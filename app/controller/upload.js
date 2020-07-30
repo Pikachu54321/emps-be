@@ -85,8 +85,8 @@ class UploadController extends Controller {
           file = {
             uid: Math.random().toString(36).substring(2),
             name: filename,
-            url: "/uploads/" + newFoldername + filename,
-            // status:"done",
+            url: newFoldername + "/" + filename,
+            status:"success",
             // response: '{"status": "success"}', // 服务端响应内容
           };
           fileList.push(file);
@@ -100,16 +100,16 @@ class UploadController extends Controller {
         // files.push(`${attachment._id}`) // console.log(result)
       }
     }
-    ctx.body = {
-      status:"success",
-      file: file,
-      fileList: fileList,
-      event: {
-        percent: 100,
-      },
-    };
-    ctx.status = 200;
-    // ctx.helper.success({ ctx, res: { file: file, fileList: fileList } });
+    // ctx.body = {
+    //   status:"success",
+    //   file: file,
+    //   fileList: fileList,
+    //   event: {
+    //     percent: 100,
+    //   },
+    // };
+    // ctx.status = 200;
+    ctx.helper.success({ ctx, res: { file: file, fileList: fileList } });
   }
 }
 

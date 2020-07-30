@@ -271,5 +271,29 @@
     花点时间学习操作掌握
 
 
-
+你可观察百度网盘电脑端在电脑上缓存的数据库文件，是以db为扩展名的sqlite数据库文件，存放的是我们在网盘中存放文件的文件目录和文件md5指纹，其中的格式为
+Create  TABLE MAIN.[Temp_320897137](
+[id] INTEGER PRIMARY KEY
+,[fid] INTEGER
+,[parent_path] VARCHAR(1024)
+,[server_filename] VARCHAR(1024)
+,[file_size] INTEGER
+,[md5] VARCHAR(32)
+,[isdir] BOOLEAN
+,[category] INTEGER
+,[server_mtime] INTEGER
+,[local_mtime] INTEGER
+,[reserved1] TEXT DEFAULT ''
+,[reserved2] TEXT DEFAULT ''
+,[reserved3] TEXT DEFAULT ''
+,[reserved4] TEXT DEFAULT ''
+,[reserved5] TEXT DEFAULT ''
+,[reserved6] INTEGER DEFAULT 0
+,[reserved7] INTEGER DEFAULT 0
+,[reserved8] INTEGER DEFAULT 0
+,[reserved9] INTEGER DEFAULT 0
+   
+) ;
+路径名是parent_path，用VARCHAR(1024)格式就可，目录是类似“\Windows\System32\config”，不包含文件名
+文件名是server_filename，用VARCHAR(1024)格式就可
 

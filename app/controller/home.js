@@ -41,9 +41,9 @@ class HomeController extends Controller {
                   link: "/projects/new",
                 },
                 {
-                  text: "项目总览",
+                  text: "项目列表",
                   icon: "anticon-radar-chart",
-                  link: "/exception/404",
+                  link: "/projects/list",
                 },
               ],
             },
